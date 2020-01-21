@@ -1,0 +1,12 @@
+asgiref==3.2.3
+Django==3.0.2
+django-admin2==0.7.1
+django-adminlte2==0.4.1
+django-braces==1.14.0
+django-extra-views==0.8.0
+django-filter==1.0.0
+djangorestframework==3.5.3
+future==0.18.2
+pytz==2016.4
+six==1.14.0
+sqlparse==0.3.0

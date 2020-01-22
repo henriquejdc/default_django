@@ -16,3 +16,9 @@ class CustomUserCreateForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class CustomUserChangeForm(UserChangeForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ('first_name', 'last_name', 'fone')

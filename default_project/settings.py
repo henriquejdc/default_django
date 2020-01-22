@@ -25,7 +25,7 @@ SECRET_KEY = 'ttf@!wo_&pww36j324&@-o!0!mre&+*88&7lnwr0)t#e95b(_2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'default_project.shop'
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -130,4 +130,4 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
-AUTH_USER_MODEL = 'shop.user.CustomUser'
+AUTH_USER_MODEL = 'user.CustomUser'

@@ -2,4 +2,4 @@ bd
 pip3 install psycopg2
 pip3 install psycopg2-binary
 CREATE USER user_defaul' WITH PASSWORD 'defaultdatabase';
-CREATE DATABASE default;
+CREATE DATABASE default_database;

@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'default_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'default',
+        'NAME': 'default_database',
         'USER': 'user_default',
         'PASSWORD': 'defaultdatabase',
         'HOST': '127.0.0.1',
@@ -129,5 +129,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+
 
 AUTH_USER_MODEL = 'user.CustomUser'
+
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'

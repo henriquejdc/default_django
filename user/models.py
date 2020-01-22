@@ -37,7 +37,7 @@ class CustomUser(AbstractUser):
     is_staff = models.BooleanField('Membro da equipe', default=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['firts_name', 'last_name', 'fone']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'fone']
 
     def __str__(self):
         return self.email

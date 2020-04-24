@@ -1,5 +1,3 @@
-bd
-pip3 install psycopg2
-pip3 install psycopg2-binary
 CREATE USER user_default WITH PASSWORD 'defaultdatabase';
 CREATE DATABASE default_database;
+CREATE EXTENSION pg_trgm;

@@ -6,6 +6,6 @@ Projetos default que podem ser manipulados parar qualquer finalidade
 pip install -r requeriments.txt\
 python manage.py makemagrations\
 python manage.py migrate\
-python manage.py runserver\
+python manage.py runserver
 
 # Instrucoes para se usar no BD estão no arquivo "config"

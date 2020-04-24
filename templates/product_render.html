@@ -1,0 +1,49 @@
+{% extends 'header.html' %}
+{% block content %}
+    <div class="carousel"></div>
+    <main class="text-center">
+        <div class="row">
+            <div class=" col-md-2 col-xs-12">
+                <div class="list-group">
+                    <li class="list-group-item list-group-item-dark">Departamentos</li>
+                    {% for dep in departments %}
+                        <a href="{{ dep.get_absolute_url }}" class="list-group-item list-group-item-action">{{ dep }}</a>
+                    {% endfor %}
+                    <br>
+                    <li class="list-group-item list-group-item-dark">Categorias</li>
+
+                    {% for category in categorys %}
+                        <a href="{{ category.get_absolute_url }}" class="list-group-item list-group-item-action">{{ category }}</a>
+                    {% endfor %}
+                    <br>
+                    <li class="list-group-item list-group-item-dark">Marcas</li>
+
+                    {% for brand in brands %}
+                        <a href="{{ brand.get_absolute_url }}" class="list-group-item list-group-item-action">{{ brand }}</a>
+                    {% endfor %}
+                    <br>
+
+                </div>
+            </div>
+
+            <section class="container">
+                <div class="row">
+                    {% for produto in produtos %}
+                        <div class="col-md-3 col-xs-12">
+                            <div class="card">
+                                <img class="img-responsive card-img-top img-thumbnail" src="/media/{{ produto.image.img }}" alt="{{ produto.image }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ produto }}</h5>
+                                    <p class="card-text">Em estoque: {{ produto.stock.quantity }}</p>
+                                    <a href="{{ produto.get_absolute_url }}" class="btn btn-primary stretched-link">{{ produto.price.price }} R$</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+
+    </main>
+{% endblock %}

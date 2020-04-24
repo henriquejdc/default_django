@@ -1,17 +1,12 @@
 from django.contrib import admin
-from .models import Image, Product, Price
+from .models import Banner, Site
 
-class ImageAdmin(admin.ModelAdmin):
+
+@admin.register(Banner)
+class BannerAdmin(admin.ModelAdmin):
     pass
 
 
-class Productadmin(admin.ModelAdmin):
+@admin.register(Site)
+class SiteAdmin(admin.ModelAdmin):
     pass
-
-
-class Priceadmin(admin.ModelAdmin):
-    pass
-
-admin.site.register(Image, ImageAdmin)
-admin.site.register(Product, Productadmin)
-admin.site.register(Price, Priceadmin)

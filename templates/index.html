@@ -1,15 +1,67 @@
-{% extends 'base.html' %}
-
+{% extends 'header.html' %}
 {% block content %}
-    <div class="container">
-        <h1>Project Default</h1>
-        {% if user.is_anonymous %}
-            <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
-        {% else %}
-            <div class="alert alert-primary" role="alert">
-                Seja bem-vindo(a) {{ user.get_full_name }}!
+    {% if banners %}
+        <div class="d-none d-sm-block">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    {% for banner in banners %}
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    {% endfor %}
+                </ol>
+                <div class="carousel-inner">
+                    {% for banner in banners %}
+                        {% if forloop.last %}
+                            <div class="carousel-item active">
+                        {% else %}
+                            <div class="carousel-item">
+                        {% endif %}
+
+                    <img class="first-slide" src="/media/{{ banner.banner }}" alt="First slide">
+                    <div class="container">
+                        <div class="carousel-caption text-left">
+                            <h1>{{ banner.name }}</h1>
+                            <p>{{ banner.texto }}</p>
+                            <p><a class="btn btn-lg btn-primary" href="#" role="button">Veja mais</a></p>
+                        </div>
+                    </div>
+                    </div>
+                    {% endfor %}
+
+
+                    </div>
+                    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
             </div>
-            <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
-        {% endif %}
+        </div>
+
+    {% endif %}
+    <div class="carousel"></div>
+
+    <div class="container ">
+        <div class="row">
+            <div class="card-deck">
+                {% for produto in produtos %}
+                    <div class="col-md-3 col-xs-12">
+                        <div class="card text-center" >
+                            <img class="img-responsive card-img-top img-thumbnail" src="/media/{{ produto.image.img }}" alt="{{ produto.image }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ produto }}</h5>
+                                <p class="card-text">Em estoque: {{ produto.stock.quantity }}</p>
+                                <a href="{{ produto.get_absolute_url }}" class="btn btn-outline-primary stretched-link">{{ produto.price.price }} R$</a>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
     </div>
+
 {% endblock %}

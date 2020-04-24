@@ -15,15 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from django.views.generic.base import TemplateView
+from applications.shop.urls import urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
+from applications.shop.urls import urlpatterns
 
-urlpatterns = [
-    path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
-    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
-    path('admin/', admin.site.urls),
-    path('contas/', include('django.contrib.auth.urls')),
-    path('', TemplateView.as_view(template_name='index.html'), name='index'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+urlpatterns += [
+                   path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
+                   path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
+                   path('admin/', admin.site.urls),
+                   path('contas/', include('django.contrib.auth.urls')),
+                   path('settings/', include('livesettings.urls')),
+                   path('faicon/', include('faicon.urls')),
+               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
+               + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 

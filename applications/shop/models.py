@@ -1,17 +1,27 @@
 from django.db import models
+from faicon.fields import FAIconField
 
 
-class Image(models.Model):
-    name = models.CharField(name="Nome da imagem", max_length=200)
-    image_url = models.ImageField(name="Caminho da imagem", upload_to="media/")
+class Banner(models.Model):
+    name = models.CharField(verbose_name='Texto em destaque do banner', max_length=50)
+    banner = models.ImageField(upload_to='media/')
+    texto = models.TextField()
+    ativo = models.BooleanField(default=False, verbose_name='O banner esta ativo?')
 
-class Price(models.Model):
-    name = models.CharField(name="Descricao do preco", max_length=200)
-    price = models.DecimalField(name="Valor do preco", decimal_places=2, max_digits=2, blank=True, null=True)
-    discount = models.DecimalField(name="Valor de desconto", decimal_places=2, max_digits=2, blank=True, null=True)
+    def __str__(self):
+        return "{}".format(self.name)
 
 
-class Product(models.Model):
-    name = models.CharField(name=("Nome do produto"), max_length=200)
-    url_image = models.ForeignKey(Image, on_delete=models.CASCADE)
-    price = models.ForeignKey(Price, on_delete=models.CASCADE)
+class Site(models.Model):
+    nome_site = models.CharField(verbose_name='Nome do site caso nao tenha logo e para meta tag', max_length=50)
+    icone = models.ImageField(verbose_name='Icone para metatag do site', upload_to='media/', blank=True)
+    ativo = models.BooleanField(default=False, verbose_name='Essa informacao esta ativa?')
+    icon = FAIconField(verbose_name='Icons prontos para uso',blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.icone and self.icon:
+            self.icone = self.icon.icon
+            super(Site, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return "{}".format(self.nome_site)

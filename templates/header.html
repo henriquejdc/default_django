@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block header %}
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto list-inline mx-auto justify-content-center ">
+                    {% if departments_all %}
+                        {% for department in departments_all %}
+                            <li class="nav-item">
+                                <a class="nav-link" href={{ department.get_absolute_url }}>{{ department }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+
+                </ul>
+                <form class="form-inline mt-2 mt-md-0" method="get" action="{% url "search"  %}">{% csrf_token %}
+                    <input name="search" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+{% endblock %}
+{% block footer %}
+    <div class="carousel"></div>
+
+    <footer class="page-footer font-small blue pt-4 text-center color_custom">
+
+        <div class="footer-copyright text-center py-3">
+            <div class="container">
+                <p>Projeto desenvolvido por &copy; mascDriver! <a href="../../">Entre em contato</a></p>
+            </div>
+        </div>
+    </footer>
+{% endblock %}

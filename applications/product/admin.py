@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ImageProduct, Product, Price, Sku, Category, Department, Brand, Stock
+from .models import *
 
 
 @admin.register(ImageProduct)
@@ -39,5 +39,10 @@ class StockAdmin(admin.ModelAdmin):
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Specification)
+class SpecAdmin(admin.ModelAdmin):
     pass
 

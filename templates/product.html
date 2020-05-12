@@ -35,8 +35,17 @@
 
                             <a href="#" class="btn btn-outline-success">Comprar</a>
                         </div>
+
                     </div>
                 </div>
+                {% if specification %}
+                    <div class="card-body">
+                        {% for spec in specification %}
+                            <h3> {{ spec.name }}</h3>
+                            <h5> {{ spec.text }}</h5>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

@@ -150,3 +150,12 @@ class Sku(models.Model):
 
     def get_absolute_url(self):
         return "/product/{}".format(self.slug)
+
+
+class Specification(models.Model):
+    name = models.CharField(verbose_name='Nome para especificacao ex: Detalhes', max_length=200)
+    text = models.TextField(verbose_name='Texto da especificacao')
+    sku = models.ForeignKey(Sku, verbose_name='sku a ser vinculado', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{}".format(self.name)

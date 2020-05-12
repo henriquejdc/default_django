@@ -1,4 +1,4 @@
-from ..models import Product, Department, Category, Sku, Brand
+from ..models import *
 from django.shortcuts import get_object_or_404, render
 
 
@@ -9,6 +9,9 @@ def product_view(request, slug, template='product.html'):
     dep = Department.objects.filter(slug=slug)
     category = Category.objects.filter(id__in=product.values_list('category', flat=True))
     brand = Brand.objects.filter(id__in=product.values_list('brand', flat=True))
+    print(sku)
+    spec = Specification.objects.filter(sku__in=sku)
+    print(spec)
     ctx = {
         'departments': dep,
         'product': product,
@@ -16,6 +19,7 @@ def product_view(request, slug, template='product.html'):
         'variations': skus,
         'categorys': category,
         'brands': brand,
-        'departments_all': Department.objects.all()
+        'departments_all': Department.objects.all(),
+        'specification': spec
     }
     return render(request, template, ctx)

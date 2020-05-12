@@ -1,7 +1,7 @@
 {% extends 'header.html' %}
 {% block content %}
     {% if banners %}
-        <div class="d-none d-sm-block">
+        <div class="">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                     {% for banner in banners %}
@@ -16,7 +16,7 @@
                             <div class="carousel-item">
                         {% endif %}
 
-                    <img class="first-slide" src="/media/{{ banner.banner }}" alt="First slide">
+                    <img class="first-slide img-fluid" src="/media/{{ banner.banner }}" alt="First slide">
                     <div class="container">
                         <div class="carousel-caption text-left">
                             <h1>{{ banner.name }}</h1>
@@ -44,23 +44,26 @@
     {% endif %}
     <div class="carousel"></div>
 
-    <div class="container ">
+    <div class="container">
         <div class="row">
-            <div class="card-deck">
-                {% for produto in produtos %}
-                    <div class="col-md-3 col-xs-12">
-                        <div class="card text-center" >
-                            <img class="img-responsive card-img-top img-thumbnail" src="/media/{{ produto.image.img }}" alt="{{ produto.image }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ produto }}</h5>
-                                <p class="card-text">Em estoque: {{ produto.stock.quantity }}</p>
-                                <a href="{{ produto.get_absolute_url }}" class="btn btn-outline-primary stretched-link">{{ produto.price.price }} R$</a>
+            {% for produto in produtos %}
+                <div class="col-md-3 col-xs-12">
+                <a href="{{ produto.get_absolute_url }}" class="custom-card">
+                        <div class="container_product ">
+                            <div class="card_product " >
+                                <div class="imgBx" >
+                                    <img type="png" src="/media/{{ produto.image.img }}" alt="{{ produto.image }}">
+                                </div>
+                                <div class="contentBx">
+                                    <span >{{ produto }}</span >
+                                    <p>Em estoque: {{ produto.stock.quantity }}</p>
+                                    <a href="{{ produto.get_absolute_url }}" class="btn btn-outline-primary stretched-link link">{{ produto.price.price }} R$</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                {% endfor %}
-            </div>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
     </div>
 

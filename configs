@@ -1,3 +1,9 @@
+Requisito:
+POSTGRES UBUNTU
+
+Comandos:
+psql
 CREATE USER user_default WITH PASSWORD 'defaultdatabase';
 CREATE DATABASE default_database;
+\d default_database
 CREATE EXTENSION pg_trgm;

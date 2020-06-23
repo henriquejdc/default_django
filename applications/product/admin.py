@@ -19,6 +19,7 @@ class PriceAdmin(admin.ModelAdmin):
 
 @admin.register(Sku)
 class SkuAdmin(admin.ModelAdmin):
+    exclude = ('cubic_weight',)
     list_display = ('product', 'name', 'stock', 'price')
 
 

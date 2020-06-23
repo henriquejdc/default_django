@@ -38,6 +38,7 @@ class ImageProduct(models.Model):
         self.name = "%s.%s" % (self.img.name, uuid.uuid4())
         super(ImageProduct, self).save()
 
+
 class Price(models.Model):
     name = models.CharField(verbose_name="Descricao do preco", max_length=200)
     price = models.DecimalField(verbose_name="Valor do preco", decimal_places=2, max_digits=15)
@@ -50,6 +51,7 @@ class Price(models.Model):
     def save(self, *args, **kwargs):
         self.name = "%s-%s" % (self.name, uuid.uuid4())
         super(Price, self).save(*args, **kwargs)
+
 
 class Brand(models.Model):
     name = models.CharField(verbose_name=("Nome da Marca"), max_length=200)
@@ -65,6 +67,7 @@ class Brand(models.Model):
 
     def get_absolute_url(self):
         return "/brand/{}".format(self.slug)
+
 
 class Department(models.Model):
     name = models.CharField(verbose_name=("Nome do departamento"), max_length=200)
@@ -98,6 +101,7 @@ class Category(models.Model):
     def get_absolute_url(self):
         return "/category/{}".format(self.slug)
 
+
 class Product(models.Model):
     name = models.CharField(verbose_name=("Nome do produto"), max_length=200)
     category = models.ForeignKey(Category,verbose_name=("Categoria do produto"), on_delete=models.CASCADE)
@@ -115,6 +119,7 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return "/product/{}".format(self.slug)
+
 
 class Stock(models.Model):
     name = models.CharField(verbose_name=("Descricao do estoque"), max_length=200)
@@ -135,9 +140,15 @@ class Sku(models.Model):
     image = models.ForeignKey(ImageProduct, verbose_name=("Caminho da imagem do sku"), on_delete=models.CASCADE)
     price = models.ForeignKey(Price,verbose_name=("Preco do sku"), on_delete=models.CASCADE)
     stock = models.ForeignKey(Stock, verbose_name=("Quantidade em estoque"), on_delete=models.CASCADE)
-    width = models.DecimalField(verbose_name=("Largura do sku"), decimal_places=4, max_digits=15)
-    length = models.DecimalField(verbose_name=("Comprimento do sku"), decimal_places=4, max_digits=15)
-    height = models.DecimalField(verbose_name=("Altura do sku"), decimal_places=4, max_digits=15)
+    width = models.DecimalField(verbose_name=("Largura do sku"), decimal_places=4, max_digits=15, default=0)
+    length = models.DecimalField(verbose_name=("Comprimento do sku"), decimal_places=4, max_digits=15, default=0)
+    height = models.DecimalField(verbose_name=("Altura do sku"), decimal_places=4, max_digits=15, default=0)
+    weigth = models.DecimalField(verbose_name=("Peso do sku"), decimal_places=4, max_digits=15, default=0)
+    width_freight = models.DecimalField(verbose_name=("Largura do sku para frete"), decimal_places=4, max_digits=15, default=0)
+    length_freight = models.DecimalField(verbose_name=("Comprimento do sku para frete"), decimal_places=4, max_digits=15, default=0)
+    height_freight = models.DecimalField(verbose_name=("Altura do sku para frete"), decimal_places=4, max_digits=15, default=0)
+    weigth_freight = models.DecimalField(verbose_name=("Peso do sku para frete"), decimal_places=4, max_digits=15, default=0)
+    cubic_weight = models.DecimalField(verbose_name=("Peso Cubico"), decimal_places=4, max_digits=15, default=0)
     active = models.BooleanField(verbose_name=("Esta ativo?"), default=True)
     slug = models.SlugField(("Slug"), help_text=("URL"),blank=True)
 
@@ -146,6 +157,7 @@ class Sku(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
+        self.cubic_weight = (self.length_freight * self.height_freight * self.width_freight) / 6000
         super(Sku, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

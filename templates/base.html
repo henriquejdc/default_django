@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'bootstrap-4.4.1-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/carousel.css' %}">
 
@@ -17,6 +18,8 @@
 </head>
 <body>
 {% block header %}
+    {% block login %}
+    {% endblock %}
 {% endblock %}
 {% block content %}
 {% endblock %}

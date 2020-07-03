@@ -3,8 +3,7 @@ from django.shortcuts import render, reverse
 from django.contrib.postgres.search import TrigramSimilarity
 
 
-
-def search(request, template='product_render.html'):
+def search(request, template='shop/product/product_render.html'):
     products = Product.objects.annotate(
         similarity=TrigramSimilarity('name', request.GET.get('search')),
     ).filter(similarity__gt=0.9).order_by('-similarity')

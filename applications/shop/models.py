@@ -1,5 +1,6 @@
 from django.db import models
 from faicon.fields import FAIconField
+from applications.user.models import UserDetail, AddressUser
 
 
 class Banner(models.Model):
@@ -25,3 +26,8 @@ class Site(models.Model):
 
     def __str__(self):
         return "{}".format(self.nome_site)
+
+
+class ShoppingCart(models.Model):
+    user = models.ForeignKey(UserDetail, on_delete=models.CASCADE)
+    address = models.ForeignKey(AddressUser, on_delete=models.CASCADE)

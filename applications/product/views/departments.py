@@ -2,7 +2,7 @@ from ..models import Product, Department, Category, Sku, Brand
 from django.shortcuts import get_object_or_404, render
 
 
-def department_view(request,slug, classe='', template='product_render.html'):
+def department_view(request,slug, classe='', template='shop/product/product_render.html'):
     products = Product.objects.filter(department__slug=slug)
     sku = Sku.objects.filter(product__in=products)
     dep = Department.objects.filter(slug=slug)

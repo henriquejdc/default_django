@@ -2,7 +2,7 @@ from ..models import *
 from django.shortcuts import get_object_or_404, render
 
 
-def product_view(request, slug, template='product.html'):
+def product_view(request, slug, template='shop/product/product.html'):
     sku = Sku.objects.filter(slug=slug)
     product = Product.objects.filter(sku__in=sku)
     skus = Sku.objects.filter(product__in=product)

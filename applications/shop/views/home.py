@@ -1,17 +1,18 @@
 from django.shortcuts import render
 from applications.product.utils import display_featured
 from applications.product.models import Department
-from ..models import Banner
+from ..models import Banner, ShoppingCart, ShoppingTemporaryCart
 
 
 def home(request, template='index.html'):
-
-    featured = display_featured()
-    dep = Department.objects.filter(active=True)
-    ctx = {
-        "produtos": featured,
-        "departments" : dep,
-        'departments_all': Department.objects.all(),
-        'banners': Banner.objects.filter(ativo=True)
-    }
+    ctx = {}
+    ctx['produtos'] = display_featured()
+    ctx['dep'] = Department.objects.filter(active=True)
+    if ShoppingCart.objects.filter(user__user_id=request.user.id).exists():
+        ctx['carrinho'] = ShoppingCart.objects.get(user=request.user)
+    elif ShoppingTemporaryCart.objects.filter(session=request.session).exists():
+        ctx['carrinho'] = ShoppingTemporaryCart.objects.get(session=request.session)
+    ctx['departments_all'] = Department.objects.all()
+    ctx['banners'] = Banner.objects.filter(ativo=True)
+    
     return render(request, template, ctx)

@@ -52,12 +52,12 @@
                         <div class="container_product ">
                             <div class="card_product" >
                                 <div class="imgBx" >
-                                    <img type="png" class="img-responsive" src="/media/{{ produto.image.img }}" alt="{{ produto.image }}">
+                                    <img type="png" class="img-responsive" src="/media/{{ produto.image.img }}" alt="{{ produto.image }}" >
                                 </div>
                                 <div class="contentBx  form-control">
                                     <p class="font-weight-bold">{{ produto }}</p >
                                     <p class="font-weight-bold">{{ produto.price.price }} R$</p>
-                                    <a href="{% url 'add_to_cart' %}" class=" btn btn-outline-success ">Adicionar ao carrinho</a>
+                                    <a href="{% url 'add_to_cart' produto.id %}" class=" btn btn-outline-success ">Adicionar ao carrinho</a>
                                     <br>
                                     <a class="font-weight-bold btn" href="#">Mais delalhes</a >
                                 </div>

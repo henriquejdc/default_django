@@ -21,13 +21,13 @@ django-adminlte2==0.4.1
 django-appconf==1.0.4
 django-braces==1.14.0
 django-channels==0.7.0
+django-crispy-forms==1.9.2
 django-extra-views==0.8.0
 django-faicon==0.1.0
 django-filter==1.0.0
 django-image-cropping==1.4.0
 django-jet==1.0.8
 django-keyedcache3==1.5.4
-django-livesettings==1.4.post16
 django-livesettings3==1.4.20
 django-thumbnails==0.3.2
 djangorestframework==3.5.3

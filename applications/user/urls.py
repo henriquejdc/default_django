@@ -17,6 +17,7 @@ urlpatterns = [
     path('password_reset/done/', PasswordResetDoneView.as_view(), name="password_reset_done"),
     path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view( success_url='/accounts/reset/done/'), name="password_reset_confirm"),
     path('reset/done/', PasswordResetCompleteView.as_view(), name="password_reset_complete"),
+    path('edit/<int:id>', edit_account, name="edit_account"),
 
     #TODO
     # path('profile/update', CustomProfileEditView.as_view(), name="update_porfile"),

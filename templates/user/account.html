@@ -1,0 +1,27 @@
+{% extends 'header.html' %}
+
+{% block content %}
+    <form action="{% url 'accounts:edit_account' account.user.id %}" class="form-group">
+        <input name="nome" type="text" class="form-control">
+        <input name="cpf_cnpj" type="text" class="form-control">
+        <input name="ie_rg" type="text" class="form-control">
+        <input name="celular" type="text" class="form-control">
+        <input name="celular2" type="text" class="form-control">
+        <input name="telefone" type="text" class="form-control">
+        <button type="submit" class="btn btn-success">Atualizar</button>
+    </form>
+
+
+
+    <form action="{% url 'accounts:edit_account' address.user_detail.id %}" class="form-group">
+        <input name="user_detail" type="text" class="form-control">
+        <input name="cep" type="text" class="form-control">
+        <input name="street" type="text" class="form-control">
+        <input name="number" type="text" class="form-control">
+        <input name="neighborhood" type="text" class="form-control">
+        <input name="city" type="text" class="form-control">
+        <input name="complement" type="text" class="form-control">
+        <input name="description" type="text" class="form-control">
+        <button type="submit" class="btn btn-success">Atualizar</button>
+    </form>
+{% endblock %}

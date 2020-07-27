@@ -19,7 +19,7 @@ def department_view(request,slug, classe='', template='shop/product/product_rend
     return render(request, template, ctx)
 
 
-def category_view(request,slug, classe='', template='product_render.html'):
+def category_view(request,slug, classe='', template='shop/product/product_render.html'):
     products = Product.objects.filter(category__slug=slug)
     sku = Sku.objects.filter(product__in=products)
     dep = Department.objects.filter(id__in=products.values_list('department', flat=True))
@@ -35,7 +35,7 @@ def category_view(request,slug, classe='', template='product_render.html'):
 
     return render(request, template, ctx)
 
-def brand_view(request,slug, classe='', template='product_render.html'):
+def brand_view(request,slug, classe='', template='shop/product/product_render.html'):
     brand = Brand.objects.filter(slug=slug)
     products = Product.objects.filter(brand__in=brand)
     sku = Sku.objects.filter(product__in=products)

@@ -116,6 +116,15 @@ DATABASES = {
     }
 }
 
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '0.0.0.0',
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 

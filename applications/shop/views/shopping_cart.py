@@ -14,14 +14,21 @@ def shopping_cart(request, template='shop/checkout/shopping_cart.html'):
 
 
 def add_to_cart(request, id):
-    if request.user.id:
-        cart = ShoppingCart.objects.create(user_id=request.user.id)
-        items = ItemsCart(shopping_cart=cart)
-    else:
-        cart = ShoppingTemporaryCart.objects.create(session=request.session)
-        cart.save()
-        items = ItemsCart(shopping_temp=cart)
+
+    cart = ShoppingTemporaryCart.objects.create(session=request.session)
+    cart.save()
+    items = ItemsCart(shopping_temp=cart)
     sku = Sku.objects.get(id=id)
     items.sku = sku
     items.save()
+    product_document = {
+        'title': sku.name,
+        'price': sku.price.price
+    }
+    try:
+        request.session['cart'][str(sku.id)] = product_document
+    except:
+        request.session['cart'] = {}
+
+    print(request.session['cart'])
     return render(request, template_name='index.html')

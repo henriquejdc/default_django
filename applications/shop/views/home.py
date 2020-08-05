@@ -11,16 +11,11 @@ def home(request, template='index.html'):
     ctx = {}
     ctx['produtos'] = display_featured()
     ctx['dep'] = Department.objects.filter(active=True)
-    sum = 0
     try:
         ctx['carrinho'] = request.session['cart']
-        for i in ctx['carrinho']:
-            sum += i.price.price
-        ctx['sum'] = sum
     except KeyError:
         request.session['cart'] = list()
     ctx['departments_all'] = Department.objects.all()
     ctx['banners'] = Banner.objects.filter(ativo=True)
     ctx['logo'] = Site.objects.filter(ativo=True)
-
     return render(request, template, ctx)

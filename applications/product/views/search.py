@@ -25,5 +25,8 @@ def search(request, template='shop/product/product_render.html'):
             'brands': brand,
             'departments_all': Department.objects.all()
         }
-
+    try:
+        ctx['carrinho'] = request.session['cart']
+    except KeyError:
+        request.session['cart'] = list()
     return render(request, template, ctx)

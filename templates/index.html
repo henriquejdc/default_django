@@ -45,28 +45,56 @@
     <div class="carousel"></div>
 
     <div class="container">
-        <div class="row">
-            {% for produto in produtos %}
-                <div class="col-md-4 col-xs-12">
-                <a href="{{ produto.get_absolute_url }}" class="custom-card">
-                        <div class="container_product ">
-                            <div class="card_product" >
-                                <div class="imgBx" >
-                                    <img type="png" class="img-responsive" src="/media/{{ produto.image.img }}" alt="{{ produto.image }}" >
-                                </div>
-                                <div class="contentBx  form-control">
-                                    <p class="font-weight-bold">{{ produto }}</p >
-                                    <p class="font-weight-bold">{{ produto.price.price }} R$</p>
-                                    <a href="{% url 'add_to_cart' produto.id %}" class=" btn btn-outline-success ">Adicionar ao carrinho</a>
-                                    <br>
-                                    <a class="font-weight-bold btn" href="#">Mais delalhes</a >
+
+        <form  method="POST" class="teste">
+            {% csrf_token %}
+            <div class="row" >
+
+                {% for produto in produtos %}
+                    <input value="{{ produto.id }}" name="produto" hidden>
+                    <a href="{{ produto.get_absolute_url }}" class="custom-card">
+                        <div class="col-md-4 col-xs-12">
+                            <div class="container_product ">
+                                <div class="card_product" >
+                                    <div class="imgBx" >
+                                        <img type="png" class="img-responsive" src="/media/{{ produto.image.img }}" alt="{{ produto.image }}" >
+                                    </div>
+                                    <div class="contentBx  form-control">
+                                        <p class="font-weight-bold">{{ produto }}</p >
+                                        <p class="font-weight-bold">{{ produto.price.price }} R$</p>
+                                        <button type="submit" class=" btn btn-outline-success teste ">Adicionar ao carrinho</button>
+                                        <br>
+                                        <a class="font-weight-bold btn" href="#">Mais delalhes</a >
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </a>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
+        </form>
+
     </div>
 
+    <script>
+        $(document).ready(function () {
+            $(".teste").submit(function (e) {
+                // preventing from page reload and default actions
+                e.preventDefault();
+                // serialize the data for sending the form data.
+                var serializedData = $(this).serialize();
+                // make POST ajax call
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'add_to_cart' %}",
+                    data: serializedData,
+                    success: function () {
+                        $('#message').html("<h2>Contact Form Submitted!</h2>")
+                    }
+                });
+                return false; //<---- move it here
+            });
+
+        });
+    </script>
 {% endblock %}

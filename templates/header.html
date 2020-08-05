@@ -67,12 +67,15 @@
                                 {% for item in carrinho %}
                                     <div class="card">
                                         <div class="card-header">
-                                            {{ item.product.name }}
+                                            {{ item.sku.product.name }}
                                         </div>
                                         <div class="card-body">
-                                            <img src="/media/{{ item.image.img }}">
-                                            <p>{{ item.product.name }} - {{ item.name }}</p>
-                                            <p>{{ item.price.price }}</p>
+                                            <img src="/media/{{ item.sku.image.img }}">
+                                            <p>{{ item.sku.product.name }} - {{ item.sku.name }}</p>
+                                            <label>
+                                                <input value="{{ item.quantity }}">
+                                            </label>
+                                            <p>{{ item.sku.price.price }}</p>
                                         </div>
                                     </div>
                                 {% endfor %}

@@ -15,7 +15,10 @@ def department_view(request,slug, classe='', template='shop/product/product_rend
         'brands': brand,
         'departments_all': Department.objects.all()
     }
-
+    try:
+        ctx['carrinho'] = request.session['cart']
+    except KeyError:
+        request.session['cart'] = list()
     return render(request, template, ctx)
 
 
@@ -32,7 +35,10 @@ def category_view(request,slug, classe='', template='shop/product/product_render
         'brands': brand,
         'departments_all': Department.objects.all()
     }
-
+    try:
+        ctx['carrinho'] = request.session['cart']
+    except KeyError:
+        request.session['cart'] = list()
     return render(request, template, ctx)
 
 def brand_view(request,slug, classe='', template='shop/product/product_render.html'):
@@ -48,4 +54,8 @@ def brand_view(request,slug, classe='', template='shop/product/product_render.ht
         'brands': brand,
         'departments_all': Department.objects.all()
     }
+    try:
+        ctx['carrinho'] = request.session['cart']
+    except KeyError:
+        request.session['cart'] = list()
     return render(request, template, ctx)

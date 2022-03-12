@@ -1,5 +1,5 @@
 # Project Empty to Djan
-Projeto Django
+Project Django
 
 
 # Create venv with django & python 3.6

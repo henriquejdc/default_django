@@ -12,7 +12,7 @@ Install in terminal:
 To create a BD
 - makemagrations
 - migrate
-- 
+
 To create a initial user
 - createsuperuser 
 

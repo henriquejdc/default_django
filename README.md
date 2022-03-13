@@ -1,4 +1,4 @@
-# Project Empty to Djan
+# Project Empty to Django
 Project Django
 
 

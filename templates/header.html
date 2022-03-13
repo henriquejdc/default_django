@@ -1,13 +1,22 @@
 {% include 'registration/login.html' %}
 {% block header %}
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="position: absolute!important;">
-            <a class="navbar-brand" href="/">Home</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <header id="Header">
+        <nav class="navbar navbar-expand-md navbar-light fixed-top  sticky-top"
+             style="background-color: #e3f2fd;position: fixed!important;">
+            {% if logo %}
+                {% for l in logo %}
+                    <a class="logo-mini logo-lg" href="/"><img src="/media/{{ l.logo }}"></a>
+                {% endfor %}
+            {% else %}
+                <a class="navbar-brand" href="/">Home</a>
+
+            {% endif %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto list-inline mx-auto justify-content-center ">
+            <div class="collapse navbar-collapse " id="navbarCollapse">
+                <ul class="navbar-nav mr-auto list-inline mx-auto justify-content-center d-lg-none">
                     {% if departments_all %}
                         {% for department in departments_all %}
                             <li class="nav-item">
@@ -16,30 +25,98 @@
                         {% endfor %}
                     {% endif %}
                 </ul>
-<a class="nav-item nav-link" href="{% url 'accounts:password_change' %}">CHANGE_PASSWORD</a>
-                {% block login %}
-                    {% if user.is_authenticated %}
-                        <div class="dropdown show">
-                            <button class="btn btn-secondary dropdown-toggle mr-sm-2"  id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ user.first_name }}
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#">Minha conta</a>
-                                <a class="dropdown-item" href="#">Meus pedidos</a>
-                                <a class="dropdown-item" href="{% url 'accounts:logout' %}">Sair</a>
-                            </div>
-                        </div>
-                    {% else %}
-                        <button class="btn btn-outline-secondary mr-sm-2" data-toggle="modal" data-target="#elegantModalForm">Logar</button>
-                    {% endif %}
-                {% endblock %}
-                <form class="form-inline mt-2 mt-md-0" method="get" action="{% url "search"  %}">{% csrf_token %}
-                    <input name="search" class="form-control mr-sm-2" type="text" placeholder="Pesquisar" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
+                <form class="form-inline mt-2 mt-md-0 list-inline mx-auto justify-content-center" method="get"
+                      action="{% url "search" %}">{% csrf_token %}
+                    <input name="search" class="form-control mr-sm-2 input-lg" type="text" placeholder="Pesquisar"
+                           aria-label="Search" size="50">
+                    <button class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" type="submit"><i
+                            class="fa fa-search"></i></button>
                 </form>
+                {% if user.is_authenticated %}
+                    <div class="dropdown show">
+                        <button class="btn btn-secondary dropdown-toggle mr-sm-2" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ user.first_name }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'accounts:edit_account' user.id %}">Minha conta</a>
+                            <a class="dropdown-item" href="#">Meus pedidos</a>
+                            <a class="dropdown-item" href="{% url 'accounts:logout' %}">Sair</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <button class="btn btn-outline-secondary mr-sm-2" data-toggle="modal"
+                            data-target="#elegantModalForm">Logar
+                    </button>
+                {% endif %}
 
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-info" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                        <i class="fa fa-shopping-cart"></i>
+                        {% if carrinho %}
+                            <span class="badge badge-primary badge-pill">{{ carrinho|length }}</span>
+                        {% else %}
+                            <span class="badge badge-primary badge-pill">0</span>
+                        {% endif %}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        {% if carrinho %}
+                            <div class="scrollbar-y">
+                                {% for item in carrinho %}
+                                    <div class="card">
+                                        <div class="card-header">
+                                            {{ item.sku.product.name }}
+                                        </div>
+                                        <div class="card-body">
+                                            <img src="/media/{{ item.sku.image.img }}">
+                                            <p>{{ item.sku.product.name }} - {{ item.sku.name }}</p>
+                                            <label>
+                                                <input value="{{ item.quantity }}">
+                                            </label>
+                                            <p>{{ item.sku.price.price }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="card-footer">
+                                <p class="card-text"><small class="text-muted">{{ sum }}</small></p>
+                                <a class="btn btn-success" href="{% url 'shopping_cart' %}">Checkout</a>
+                            </div>
+                        {% else %}
+                            <div class="card">
+                                <div class="card-header">
+                                    Ops
+                                </div>
+                                <div class="card-body">
+                                    <p>Você ainda não adicionou nenhum item ao carrinho</p>
+                                </div>
+
+                                <div class="card-footer">
+                                    <p class="card-text"><small class="text-muted">total</small></p>
+                                </div>
+                            </div>
+
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </nav>
+        <div class="d-flex justify-content-center border border-info" style="padding-top: 5px">
+            <div id="departments" class="d-none d-lg-block ">
+                <ul class="navbar-nav mr-auto list-inline mx-auto justify-content-center ">
+                    {% if departments_all %}
+                        {% for department in departments_all %}
+                            <li class="nav-item">
+                                <a class="nav-link text text-dark"
+                                   href={{ department.get_absolute_url }}>{{ department }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
     </header>
 {% endblock %}
 {% block content %}
@@ -51,7 +128,9 @@
 
         <div class="footer-copyright text-center py-3">
             <div class="container">
-                <p>Projeto desenvolvido por &copy; mascDriver! <a href="https://br.linkedin.com/in/diogo-baltazar-do-nascimento-865531158">Entre em contato</a></p>
+                <p>Projeto desenvolvido por &copy; mascDriver! <a
+                        href="https://api.whatsapp.com/send?phone=5549985058553" target="_blank">Entre em contato</a>
+                </p>
             </div>
         </div>
     </footer>

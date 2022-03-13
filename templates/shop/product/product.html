@@ -1,0 +1,80 @@
+{% extends 'header.html' %}
+{% block content %}
+    <div class="carousel"></div>
+    <div class="container">
+
+        <form  method="POST" class="teste">
+            {% csrf_token %}
+            {% for p in sku %}
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href={{ p.product.department.get_absolute_url }}>{{ p.product.department }}</a></li>
+                        <li class="breadcrumb-item"><a href={{ p.product.category.get_absolute_url }}>{{ p.product.category }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ p.product }}</li>
+
+                    </ol>
+                </nav>
+
+                <div class="card">
+                    <h5 class="card-header">{{p.product.name }}</h5>
+                    <div class="card-body">
+                        <input value="{{ p.id }}" name="produto" hidden>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img class="img-thumbnail " src="/media/{{ p.image.img }}">
+                            </div>
+                            <div class="col-md-9">
+                                <blockquote class="blockquote">{{ p.product  }} - {{ p.name }}</blockquote>
+                                <p class="card-text">R$ {{ p.price.price }}</p>
+                                <p class="card-text">Em estoque: {{ p.stock.quantity }}</p>
+                                {% for v in variations %}
+                                    {% if v == p %}
+                                        <a class="btn btn-outline-primary active">{{ v.name }}</a>
+                                    {% else %}
+                                        <a href="{{ v.get_absolute_url }}" class="btn btn-outline-primary">{{ v.name }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                <br>
+                                <br>
+
+                                <button href="{% url 'add_to_cart' %}" class="btn btn-outline-success">Adicionar ao carrinho</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% if specification %}
+                        <div class="card-body">
+                            {% for spec in specification %}
+                                <h3> {{ spec.name }}</h3>
+                                <h5> {{ spec.text }}</h5>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </form>
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(".teste").submit(function (e) {
+                // preventing from page reload and default actions
+                e.preventDefault();
+                // serialize the data for sending the form data.
+                var serializedData = $(this).serialize();
+                // make POST ajax call
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'add_to_cart' %}",
+                    data: serializedData,
+                    success: function () {
+                        $('#message').html("<h2>Contact Form Submitted!</h2>")
+                    }
+                });
+                return false; //<---- move it here
+            });
+
+        });
+    </script>
+{% endblock %}

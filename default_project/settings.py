@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     'applications.product',
     'applications.user',
     'applications.shop',
+    'applications.payment',
+    'applications.shipping',
     'faicon'
 ]
 from easy_thumbnails.conf import Settings as thumbnail_settings
@@ -114,6 +116,15 @@ DATABASES = {
     }
 }
 
+
+CACHES = {
+   'default': {
+      'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+      'LOCATION': '127.0.0.1:11211',
+   }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -163,7 +174,7 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 
-CRISPY_TEMPLATE_PACK="bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 ASGI_APPLICATION = 'realtime.routing.application'
 
@@ -210,10 +221,10 @@ THUMBNAILS = {
 }
 
 # Email configurations
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='smtp.gmail.com' # Set your email host
-EMAIL_PORT=587
-EMAIL_HOST_USER='defaultdjango@gmail.com'
-EMAIL_HOST_PASSWORD='Django123' #Your password
-EMAIL_USE_TLS=True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com' # Set your email host
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'defaultdjango@gmail.com'
+EMAIL_HOST_PASSWORD = 'Django123' #Your password
+EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'defaultdjango@gmail.com'

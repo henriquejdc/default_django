@@ -1,6 +1,6 @@
 from django.db import models
-
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+
 
 class UsuarioManager(BaseUserManager):
     use_in_migration = True
@@ -43,3 +43,23 @@ class CustomUser(AbstractUser):
         return self.email
 
     objects = UsuarioManager()
+
+
+class UserDetail(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    cpf_cnpj = models.CharField(verbose_name='Cnpj ou Cpf do cliente', max_length=18, blank=True, null=True)
+    ie_rg = models.CharField(verbose_name='Insc. estadual ou RG', max_length=20, blank=True, null=True)
+    celular = models.CharField(verbose_name='Celular principal', max_length=13, blank=True, null=True)
+    celular2 = models.CharField(verbose_name='Celular secundario', max_length=13, blank=True, null=True)
+    telefone = models.CharField(verbose_name='Telefone residencial', max_length=13, blank=True, null=True)
+
+
+class AddressUser(models.Model):
+    user_detail = models.ForeignKey(UserDetail, on_delete=models.CASCADE)
+    cep = models.CharField(verbose_name='CEP do cliente', max_length=200, blank=True, null=True)
+    street = models.CharField(verbose_name='Rua do cliente', max_length=200, blank=True, null=True)
+    number = models.CharField(verbose_name='Numero do cliente', max_length=200, blank=True, null=True)
+    neighborhood = models.CharField(verbose_name='Bairro do cliente', max_length=200, blank=True, null=True)
+    city = models.CharField(verbose_name='Cidade do cliente', max_length=200, blank=True, null=True)
+    complement = models.CharField(verbose_name='Complemento', max_length=200, blank=True, null=True)
+    description = models.CharField(verbose_name='Descrição do endereço', max_length=200, blank=True, null=True)

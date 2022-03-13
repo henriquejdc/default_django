@@ -8,7 +8,7 @@ def display_featured(num_to_display=None, random_display=None):
     Items can be displayed randomly or all in order
     """
     if num_to_display is None:
-        num_to_display = config_value('PRODUCT','NUM_DISPLAY')
+        num_to_display = config_value('PRODUCT', 'NUM_DISPLAY')
     if random_display is None:
         random_display = config_value('PRODUCT','RANDOM_FEATURED')
 
